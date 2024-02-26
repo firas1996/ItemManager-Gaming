@@ -1,4 +1,5 @@
 import {
+  Button,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -10,17 +11,29 @@ import {
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import UserItem from "../Components/UserItem";
+import { useNavigation } from "@react-navigation/native";
 let id = 1;
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [impData, setImpData] = useState("");
+  const navigation = useNavigation();
   const addNew = () => {
     if (impData != "") {
-      setUsers([{ value: impData, id: id }, ...users]);
+      setUsers([{ value: impData, id: id, isFav: false }, ...users]);
       id++;
       setImpData("");
     }
   };
+  const setFav = (id) => {
+    setUsers(
+      users.map((item) => {
+        return item.id == id ? { ...item, isFav: !item.isFav } : item;
+      })
+    );
+  };
+  const favList = users.filter((user) => {
+    return user.isFav == true;
+  });
 
   return (
     <View style={styles.container}>
@@ -34,10 +47,18 @@ const Home = () => {
           <Text style={styles.btnTXT}>Add</Text>
         </TouchableOpacity>
       </View>
+      <View style={{ width: "96%", flex: 1 }}>
+        <Button
+          title="Go To FavUsers"
+          onPress={() => {
+            navigation.navigate("FavUsers", { users: favList, setFav: setFav });
+          }}
+        />
+      </View>
       <View style={styles.elems}>
         <ScrollView>
           {users.map((user, index) => {
-            return <UserItem user={user} />;
+            return <UserItem key={user.id} user={user} setFav={setFav} />;
           })}
         </ScrollView>
       </View>
@@ -49,7 +70,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

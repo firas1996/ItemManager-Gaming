@@ -1,21 +1,22 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-const UserItem = ({ user }) => {
-  const [isFav, setIsFav] = useState(false);
+const UserItem = ({ user, setFav }) => {
+  // const [isFav, setIsFav] = useState(false);
   const changeIcon = () => {
-    if (isFav == true) {
-      setIsFav(false);
-    } else {
-      setIsFav(true);
-    }
+    // if (isFav == true) {
+    //   setIsFav(false);
+    // } else {
+    //   setIsFav(true);
+    // }
+    setFav(user.id);
   };
   return (
     <View key={user.id} style={styles.item}>
       <Text style={styles.itemTXT}>{user.value}</Text>
       <Pressable onPress={changeIcon}>
         <Ionicons
-          name={isFav ? "star" : "star-outline"}
+          name={user.isFav ? "star" : "star-outline"}
           size={28}
           color="white"
         />
