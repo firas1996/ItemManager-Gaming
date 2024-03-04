@@ -49,14 +49,14 @@ const Home = () => {
           <Text style={styles.btnTXT}>Add</Text>
         </TouchableOpacity>
       </View>
-      {/* <View style={{ width: "96%", flex: 1 }}>
+      <View style={{ width: "96%", flex: 1 }}>
         <Button
           title="Go To FavUsers"
           onPress={() => {
-            navigation.navigate("FavUsers", { users: favList, setFav: setFav });
+            navigation.navigate("FavUsers");
           }}
         />
-      </View> */}
+      </View>
       <View style={styles.elems}>
         <ScrollView>
           {favCTX.users.map((user, index) => {

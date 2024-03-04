@@ -4,17 +4,14 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./Screens/Home";
 import FavUsers from "./Screens/FavUsers";
 import FavUsersProvider from "./store/context/FavUsersContext";
-const Drawer = createDrawerNavigator();
+import Drawer from "./navigation/Drawer";
 
 export default function App() {
   return (
     <>
       <FavUsersProvider>
         <NavigationContainer>
-          <Drawer.Navigator>
-            <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="FavUsers" component={FavUsers} />
-          </Drawer.Navigator>
+          <Drawer />
         </NavigationContainer>
       </FavUsersProvider>
       <StatusBar style="auto" />
