@@ -1,14 +1,18 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import UserItem from "../Components/UserItem";
+import { FavContextStore } from "../store/context/FavUsersContext";
 
-const FavUsers = ({ route }) => {
-  const { users, setFav } = route.params;
+const FavUsers = () => {
+  const favCTX = useContext(FavContextStore);
+  const favList = favCTX.users.filter((user) => {
+    return user.isFav == true;
+  });
   return (
     <View>
       <ScrollView>
-        {users.map((user) => {
-          return <UserItem key={user.id} user={user} setFav={setFav} />;
+        {favList.map((user) => {
+          return <UserItem key={user.id} user={user} />;
         })}
       </ScrollView>
     </View>

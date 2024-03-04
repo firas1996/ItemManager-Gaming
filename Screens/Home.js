@@ -8,32 +8,34 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import UserItem from "../Components/UserItem";
 import { useNavigation } from "@react-navigation/native";
-let id = 1;
+import { FavContextStore } from "../store/context/FavUsersContext";
+
 const Home = () => {
-  const [users, setUsers] = useState([]);
   const [impData, setImpData] = useState("");
+
   const navigation = useNavigation();
+  const favCTX = useContext(FavContextStore);
+
   const addNew = () => {
     if (impData != "") {
-      setUsers([{ value: impData, id: id, isFav: false }, ...users]);
-      id++;
+      favCTX.saveUser(impData);
       setImpData("");
     }
   };
-  const setFav = (id) => {
-    setUsers(
-      users.map((item) => {
-        return item.id == id ? { ...item, isFav: !item.isFav } : item;
-      })
-    );
-  };
-  const favList = users.filter((user) => {
-    return user.isFav == true;
-  });
+  // const setFav = (id) => {
+  //   setUsers(
+  //     users.map((item) => {
+  //       return item.id == id ? { ...item, isFav: !item.isFav } : item;
+  //     })
+  //   );
+  // };
+  // const favList = users.filter((user) => {
+  //   return user.isFav == true;
+  // });
 
   return (
     <View style={styles.container}>
@@ -47,18 +49,18 @@ const Home = () => {
           <Text style={styles.btnTXT}>Add</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ width: "96%", flex: 1 }}>
+      {/* <View style={{ width: "96%", flex: 1 }}>
         <Button
           title="Go To FavUsers"
           onPress={() => {
             navigation.navigate("FavUsers", { users: favList, setFav: setFav });
           }}
         />
-      </View>
+      </View> */}
       <View style={styles.elems}>
         <ScrollView>
-          {users.map((user, index) => {
-            return <UserItem key={user.id} user={user} setFav={setFav} />;
+          {favCTX.users.map((user, index) => {
+            return <UserItem key={user.id} user={user} />;
           })}
         </ScrollView>
       </View>

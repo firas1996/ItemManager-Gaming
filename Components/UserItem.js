@@ -1,15 +1,17 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-const UserItem = ({ user, setFav }) => {
+import { FavContextStore } from "../store/context/FavUsersContext";
+const UserItem = ({ user }) => {
   // const [isFav, setIsFav] = useState(false);
+  const favCTX = useContext(FavContextStore);
   const changeIcon = () => {
     // if (isFav == true) {
     //   setIsFav(false);
     // } else {
     //   setIsFav(true);
     // }
-    setFav(user.id);
+    favCTX.setFav(user.id);
   };
   return (
     <View key={user.id} style={styles.item}>

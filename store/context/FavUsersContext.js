@@ -2,18 +2,15 @@ import { createContext, useState } from "react";
 
 export const FavContextStore = createContext({
   users: [],
-  addNew: () => {},
+  saveUser: () => {},
   setFav: () => {},
 });
-
+let id = 1;
 const FavUsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
-  const addNew = () => {
-    if (impData != "") {
-      setUsers([{ value: impData, id: id, isFav: false }, ...users]);
-      id++;
-      setImpData("");
-    }
+  const saveUser = (impData) => {
+    setUsers([{ value: impData, id: id, isFav: false }, ...users]);
+    id++;
   };
   const setFav = (id) => {
     setUsers(
@@ -22,7 +19,7 @@ const FavUsersProvider = ({ children }) => {
       })
     );
   };
-  const values = { users: users, addNew: addNew, setFav: setFav };
+  const values = { users: users, saveUser: saveUser, setFav: setFav };
   return (
     <FavContextStore.Provider value={values}>
       {children}
